@@ -56,7 +56,7 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:0}
 
 /* hero */
 .hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;overflow:hidden}
-.hero-cols{position:absolute;top:-8%;bottom:-8%;right:-2%;width:min(50vw,760px);display:grid;grid-template-columns:repeat(3,1fr);gap:14px;transform:rotate(-6deg);-webkit-mask:linear-gradient(90deg,transparent,#000 22%),linear-gradient(180deg,transparent,#000 14%,#000 86%,transparent);-webkit-mask-composite:source-in;mask:linear-gradient(90deg,transparent,#000 22%) intersect,linear-gradient(180deg,transparent,#000 14%,#000 86%,transparent)}
+.hero-cols{position:absolute;top:-8%;bottom:-8%;right:-2%;width:min(50vw,760px);display:grid;grid-template-columns:repeat(3,1fr);gap:14px;transform:perspective(1700px) rotateY(calc(-22deg + var(--my,0deg))) rotateX(calc(12deg + var(--mx,0deg))) rotate(-5deg);transform-origin:70% 50%;transition:transform .6s cubic-bezier(.2,.7,.2,1);-webkit-mask:linear-gradient(90deg,transparent,#000 22%),linear-gradient(180deg,transparent,#000 14%,#000 86%,transparent);-webkit-mask-composite:source-in;mask:linear-gradient(90deg,transparent,#000 22%) intersect,linear-gradient(180deg,transparent,#000 14%,#000 86%,transparent)}
 .hero-cols .col{display:flex;flex-direction:column;gap:14px;animation:up 46s linear infinite}
 .hero-cols .col:nth-child(2){animation-direction:reverse;animation-duration:54s}
 .hero-cols .col:nth-child(3){animation-duration:60s}
@@ -105,6 +105,22 @@ section{position:relative}
 .strip .rc video{opacity:0;transition:opacity .4s}
 .strip .rc video.on{opacity:1}
 .strip .rc::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1px var(--line)}
+
+/* 3D reel halqasi (mobil hero) */
+.ring3d{display:none;position:relative;height:340px;margin:26px calc(var(--pad) * -1) 0;perspective:650px;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.ring3d .ring{position:absolute;left:50%;top:18px;width:150px;height:267px;margin-left:-75px;transform-style:preserve-3d}
+.ring3d .rp{position:absolute;inset:0;border-radius:16px;overflow:hidden;background:var(--bg2);box-shadow:0 0 0 1px var(--line2),0 30px 60px -20px rgba(0,0,0,.8);backface-visibility:visible;-webkit-tap-highlight-color:transparent}
+.ring3d .rp img,.ring3d .rp video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ring3d .rp video{opacity:0;transition:opacity .4s}.ring3d .rp video.on{opacity:1}
+.ring3d .rp b{position:absolute;left:8px;right:8px;bottom:8px;display:flex;align-items:center;gap:6px;font:600 11px/1.2 var(--sans);padding:6px 8px;border-radius:999px;background:rgba(11,11,11,.6);backdrop-filter:blur(8px)}
+.ring3d .rp b img{position:static;width:18px;height:18px;border-radius:50%}
+.ring3d::after{content:"";position:absolute;left:12%;right:12%;bottom:6px;height:30px;border-radius:50%;background:radial-gradient(rgba(255,90,0,.35),transparent 70%);filter:blur(10px);pointer-events:none}
+.ring-hint{display:none;text-align:center;font-size:12px;color:var(--mute);margin-top:6px;letter-spacing:.04em}
+/* 3D kirish */
+.card.rv,.web.rv,.step.rv{transform:perspective(900px) rotateX(24deg) translateY(50px) scale(.96);transform-origin:50% 100%}
+.card.rv.in,.web.rv.in,.step.rv.in{transform:none}
+/* mobil pastki panel */
+.mbar{display:none}
 
 /* brands */
 .brands{display:grid;grid-template-columns:repeat(6,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}
@@ -277,7 +293,43 @@ section{position:relative}
   .about{grid-template-columns:1fr}
 }
 @media (max-width:700px){
-  .hero-cols{width:100vw;right:-30vw;opacity:.35}
+  .hero-cols{display:none}
+  .hero{min-height:0}
+  .hero .wrap{padding-top:104px;padding-bottom:36px}
+  .hero h1{font-size:clamp(40px,12.4vw,60px);max-width:none}
+  .hero-sub{margin-top:22px}
+  .hero-sub p{font-size:15.5px}
+  .hero-cta{flex-direction:column}
+  .hero-cta .btn{justify-content:center;height:52px}
+  .hero-side{display:none}
+  .ring3d,.ring-hint{display:block}
+  .logos{margin-top:26px}
+  .sec{padding:76px 0}
+  .sec-hd h2{font-size:clamp(32px,9.6vw,44px)}
+  /* coverflow */
+  .cgrid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:0;margin:0 calc(var(--pad) * -1);padding:10px 19vw 20px;perspective:1000px;scrollbar-width:none}
+  .cgrid::-webkit-scrollbar{display:none}
+  .cgrid .card{flex:0 0 62vw;scroll-snap-align:center;margin:0 -2vw;transition:none;will-change:transform}
+  .cgrid .card.rv{opacity:1}
+  .cgrid .card .d{display:block}
+  .filters{flex-wrap:nowrap;overflow-x:auto;margin:0 calc(var(--pad) * -1) 22px;padding:0 var(--pad);scrollbar-width:none}
+  .filters::-webkit-scrollbar{display:none}
+  .filters button{flex:none}
+  /* saytlar — gorizontal */
+  .webs{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 calc(var(--pad) * -1);padding:0 var(--pad) 10px;gap:12px;scrollbar-width:none}
+  .webs::-webkit-scrollbar{display:none}
+  .web{flex:0 0 82vw;scroll-snap-align:center}
+  /* studiya — 8 tadan keyin yashirish */
+  #grid:not(.all) .card:nth-child(n+9){display:none}
+  .more{display:flex!important}
+  /* pastki panel */
+  .mbar{display:flex;position:fixed;left:10px;right:10px;bottom:10px;z-index:40;gap:8px;padding:8px;border-radius:999px;background:rgba(18,18,18,.86);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 0 0 1px var(--line2),0 20px 40px rgba(0,0,0,.5);transform:translateY(140%);transition:transform .45s cubic-bezier(.2,.7,.2,1)}
+  .mbar.on{transform:none}
+  .mbar a{height:48px;border-radius:999px;display:flex;align-items:center;justify-content:center;gap:8px;font:600 14px/1 var(--sans)}
+  .mbar .tg{flex:1;background:var(--or);color:#0b0b0b}
+  .mbar .ph{width:48px;border:1px solid var(--line2)}
+  .mbar svg{width:18px;height:18px}
+  .ft{padding-bottom:90px}
   .hero-sub{grid-template-columns:1fr;gap:28px}.hero-side{align-items:flex-start;text-align:left}
   .sec-hd{grid-template-columns:1fr;gap:18px}
   .grid{columns:2;column-gap:10px}.card{margin-bottom:16px}.card .d{display:none}.card .t{flex-direction:column;gap:2px;padding-top:10px}.card .t b{font-size:13.5px}.card .pl{width:36px;height:36px;right:10px;bottom:10px}.card .tag{display:none}
@@ -338,6 +390,8 @@ section{position:relative}
         <button class="play" data-open="c-DU8RQ24CAeM"><span data-i="hero_play">Ishlarni ovoz bilan ko‘rish</span><i><svg viewBox="0 0 16 16" fill="currentColor"><path d="M3 1.5v13L14 8z"/></svg></i></button>
       </div>
     </div>
+    <div class="ring3d" id="ring3d"><div class="ring" id="ring"></div></div>
+    <div class="ring-hint" data-i="ring_hint">← Aylantiring · bosing va ko‘ring →</div>
     <div class="logos"><small data-i="logos_t">Bizga ishonganlar</small><div class="lw"><div class="li" id="logoStrip"></div></div></div>
   </div>
 </section>
@@ -389,6 +443,7 @@ section{position:relative}
     </div>
     <div class="filters" id="filters"></div>
     <div class="grid" id="grid"></div>
+    <button class="btn btn-line more" id="moreBtn" style="display:none;margin:10px auto 0;justify-content:center" data-i="more">Barcha ishlarni ko‘rsatish</button>
   </div>
 </section>
 
@@ -469,6 +524,11 @@ section{position:relative}
 </div>
 </main>
 <footer class="ft"><div class="wrap"><span>© 2026 SABR Agency · <span data-i="ft_city">Toshkent, O‘zbekiston</span></span><span data-i="ft_tag">Yangi avlod kasblari</span></div></footer>
+
+<div class="mbar" id="mbar">
+  <a class="tg" href="https://t.me/sabr_agency" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.3 18.7 19.4c-.2 1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.3-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6.2 13.1l-4.8-1.5c-1-.3-1-1 .2-1.5L20.5 2.9c.9-.3 1.6.2 1.4 1.4z"/></svg><span data-i="mbar_tg">Bepul konsultatsiya</span></a>
+  <a class="ph" href="tel:+998990243550" aria-label="Qo‘ng‘iroq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></a>
+</div>
 
 <div class="lb" id="lb" role="dialog" aria-modal="true">
   <button class="x" id="lbx" aria-label="Yopish"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m3 3 10 10M13 3 3 13"/></svg></button>
@@ -592,7 +652,7 @@ const PRINC = [
 ];
 const T = {ru:{
   nav_cl:'Клиенты',nav_bts:'Продакшн',nav_work:'Студия',nav_case:'Кейс',nav_web:'Сайты',nav_svc:'Услуги',nav_proc:'Процесс',nav_contact:'Контакты',cta_short:'Начать проект',
-  hero_eb:'Маркетинговое агентство · Ташкент',logos_t:'Нам доверяют',
+  hero_eb:'Маркетинговое агентство · Ташкент',ring_hint:'← Крутите · нажмите, чтобы смотреть →',more:'Показать все работы',mbar_tg:'Бесплатная консультация',logos_t:'Нам доверяют',
   hero_h:'Реклама <span class="ar">→</span> клиент <span class="ar">→</span> <em>продажа.</em>',
   hero_p:'Сценарий, <b>съёмка</b>, монтаж и <b>таргетированная реклама</b> — Reels и кампании, которые приводят клиентов. Более 20 брендов растут с нами в Instagram.',
   cta_main:'Бесплатная консультация',cta_work:'Работы для клиентов',hero_play:'Смотреть работы со звуком',
@@ -700,6 +760,58 @@ document.addEventListener('keydown',e=>{ if(!lb.classList.contains('on')) return
 $('#burger').onclick=()=>$('#mnav').classList.toggle('on');
 addEventListener('scroll',()=>$('#hd').classList.toggle('s',scrollY>40),{passive:true});
 render();
+
+// studiya: barchasini ko'rsatish (mobil)
+$('#moreBtn').onclick=()=>{ $('#grid').classList.add('all'); $('#moreBtn').remove(); };
+
+// mobil pastki panel
+const mbar=$('#mbar');
+addEventListener('scroll',()=>mbar.classList.toggle('on', scrollY > innerHeight*0.8 && (innerHeight+scrollY) < document.body.scrollHeight-260),{passive:true});
+
+// desktop: hero 3D devori sichqonchaga ergashadi
+const hc=$('#heroCols');
+if(matchMedia('(hover:hover)').matches){
+  addEventListener('mousemove',e=>{ if(scrollY>innerHeight) return; const x=e.clientX/innerWidth-.5, y=e.clientY/innerHeight-.5; hc.style.setProperty('--my',(x*10)+'deg'); hc.style.setProperty('--mx',(-y*8)+'deg'); },{passive:true});
+}
+
+// mobil: 3D reel halqasi
+(function(){
+  const box=$('#ring3d'), ring=$('#ring'); if(!box) return;
+  const ids=['DP6N6vcjKAo','DIyIxl9MFma','C8uEmBiNgq_','DCMRyzTqGuN','DC4C4s-KdSj','DPgyixQiAqB','DCjxqLkAi1v','DU8RQ24CAeM','DYPjKT-MjXd','DR8IrzQDaVr'];
+  const N=ids.length, step=360/N, R=Math.round(75/Math.tan(Math.PI/N))+26;
+  ring.innerHTML=ids.map((c,i)=>{const it=C.find(x=>x[0]===c);return `<div class="rp" data-open="c-${c}" style="transform:rotateY(${i*step}deg) translateZ(${R}px)"><img src="media/p/c-${c}.jpg" alt=""><video data-r="media/v/c-${c}.mp4" muted loop playsinline preload="none"></video><b><img src="media/l/${it[1]}.jpg" alt="">${it[2]}</b></div>`}).join('');
+  const ps=[...ring.children]; let ang=0, vel=-0.18, drag=false, lastX=0, moved=0, active=false;
+  const io=new IntersectionObserver(es=>{active=es[0].isIntersecting},{}); io.observe(box);
+  box.addEventListener('pointerdown',e=>{drag=true;lastX=e.clientX;moved=0;vel=0;box.setPointerCapture(e.pointerId)});
+  box.addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-lastX;lastX=e.clientX;moved+=Math.abs(dx);ang+=dx*0.35;vel=dx*0.35});
+  const up=()=>{drag=false; if(Math.abs(vel)<0.15) vel=vel<0?-0.18:0.18;};
+  box.addEventListener('pointerup',up); box.addEventListener('pointercancel',up);
+  box.addEventListener('click',e=>{ if(moved>8){ e.stopPropagation(); e.preventDefault(); } },true);
+  let front=-1;
+  (function tick(){
+    if(active && getComputedStyle(box).display!=='none'){
+      if(!drag){ ang+=vel; const base=vel<0?-0.18:0.18; vel+= (base-vel)*0.03; }
+      ring.style.transform=`translateZ(-${R}px) rotateY(${ang}deg)`;
+      let best=0,bd=999;
+      ps.forEach((p,i)=>{ let a=((i*step+ang)%360+540)%360-180; const c=Math.cos(a*Math.PI/180); p.style.filter=`brightness(${(0.35+0.65*Math.max(0,c)).toFixed(2)})`; if(Math.abs(a)<bd){bd=Math.abs(a);best=i;} });
+      if(best!==front){ front=best; ps.forEach((p,i)=>{ const v=p.querySelector('video'); if(i===best){ if(!v.getAttribute('src')) v.src=v.dataset.r; v.play().then(()=>v.classList.add('on')).catch(()=>{}); } else { v.pause(); } }); }
+    }
+    requestAnimationFrame(tick);
+  })();
+})();
+
+// mobil: coverflow mijoz reellari
+(function(){
+  const g=$('#cgrid'); const mq=matchMedia('(max-width:700px)');
+  function upd(){ if(!mq.matches){ g.querySelectorAll('.card').forEach(c=>{c.style.transform='';c.style.opacity='';c.style.zIndex='';}); return; }
+    const cx=g.getBoundingClientRect().left+g.clientWidth/2;
+    g.querySelectorAll('.card:not(.hide)').forEach(c=>{ const r=c.getBoundingClientRect(); const o=Math.max(-1.6,Math.min(1.6,(r.left+r.width/2-cx)/r.width));
+      c.style.transform=`perspective(1000px) translateZ(${-Math.abs(o)*120}px) rotateY(${-o*32}deg) scale(${1-Math.abs(o)*0.06})`; c.style.zIndex=10-Math.round(Math.abs(o)*4); c.style.opacity=(1-Math.abs(o)*0.25).toFixed(2); });
+  }
+  g.addEventListener('scroll',()=>requestAnimationFrame(upd),{passive:true});
+  addEventListener('resize',upd); setTimeout(upd,60);
+  document.addEventListener('click',e=>{ if(e.target.closest('[data-cf],[data-l]')) setTimeout(()=>{ g.scrollLeft=0; upd(); },30); });
+})();
 </script>
 </body>
 </html>
